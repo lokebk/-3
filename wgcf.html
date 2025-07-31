@@ -3,10 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>违规违纪</title>
-    <h1>以下是违纪同学加原因</h1>
+    <title>学生违纪查询 - 苏桥初级中学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary: #4285f4;
+            --primary-light: #e8f0fe;
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --surface: #ffffff;
+            --border: #dadce0;
+            --success: #34a853;
+            --warning: #f9ab00;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(66, 133, 244, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #3367d6 100%);
+            color: white;
+            padding: 40px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .logo {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .header-wave {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="white"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="white"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="white"></path></svg>');
+            transform: rotate(180deg);
+            z-index: 1;
+        }
+
+        .content {
+            padding: 50px 60px;
+        }
+
+        .status-card {
+            background-color: var(--primary-light);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .status-icon {
+            font-size: 64px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .status-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .status-message {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .secondary-message {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--warning);
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .updates-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: rgba(66, 133, 244, 0.3);
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .faq-list {
+            list-style: none;
+        }
+
+        .faq-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-list li:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+        }
+
+        footer {
+            padding: 40px 60px;
+            background-color: #f1f3f4;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-link:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(66, 133, 244, 0.3);
+        }
+
+        .action-button:hover {
+            background-color: #3367d6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(66, 133, 244, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header, .content, footer {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin: 20px auto;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .status-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>暂时没有，开发者懒不想查</h1>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>学生违纪查询</h1>
+                <p class="subtitle">苏桥初级中学学生行为规范记录系统</p>
+            </div>
+            <div class="logo">
+                <i class="fas fa-gavel"></i>
+            </div>
+            <div class="header-wave"></div>
+        </header>
+        
+        <div class="content">
+            <div class="status-card">
+                <div class="status-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="status-title">目前无违纪记录</h2>
+                <p class="status-message">根据当前查询结果，近期未有学生违纪记录需要报告。这反映了苏中学生良好的纪律素养和积极向上的学习氛围。</p>
+                <a href="#" class="action-button">
+                    <i class="fas fa-search"></i>刷新查询结果
+                </a>
+            </div>
+            
+            <div class="secondary-message">
+                <p><i class="fas fa-info-circle"></i> 注：开发者目前暂时不想查询违纪记录。如需查询具体违纪情况，请联系学校德育处或稍后再试。</p>
+            </div>
+            
+            <div class="updates-section">
+                <h3 class="section-title">违纪行为指南</h3>
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h3>常见违纪行为</h3>
+                        <p>包括迟到早退、课堂扰乱、作弊抄袭、打架斗殴、吸烟饮酒、破坏公物等违反校纪校规的行为。</p>
+                        <p>详细分类见学校《学生行为规范手册》。</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>处理流程</h3>
+                        <p>1. 发现违纪行为并记录</p>
+                        <p>2. 德育处审核确定</p>
+                        <p>3. 与学生及家长沟通</p>
+                        <p>4. 根据校规采取相应措施</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>违纪影响</h3>
+                        <p>违纪记录会影响学生的评优评先资格、综合素质评价结果，严重违纪还可能涉及教育处分，记录于学生档案。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="updates-section">
+                <h3 class="section-title">常见问题</h3>
+                <ul class="faq-list">
+                    <li>
+                        <div class="faq-question">Q: 如何查询个人违纪记录？</div>
+                        <div class="faq-answer">A: 学生可登录学校电子校务平台，在"学生档案-纪律情况"中查看个人记录。</div>
+                    </li>
+                    <li>
+                        <div class="faq-question">Q: 违纪记录会保存多久？</div>
+                        <div class="faq-answer">A: 一般违纪行为记录在学生在校期间有效，毕业后清除。严重处分会记录于学生档案。</div>
+                    </li>
+                    <li>
+                        <div class="faq-question">Q: 对违纪记录有异议怎么办？</div>
+                        <div class="faq-answer">A: 可在违纪记录确认后的7个工作日内向德育处提交书面申诉材料。</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <a href="index.html" class="back-link">
+                    <i class="https://lokebk.github.io/fsdghb/index.html"></i> 返回学校官网
+                </a>
+                <div class="copyright">
+                    © 2025 苏桥初级中学 德育处 | 违纪记录查询系统 V2.0
+                </div>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
